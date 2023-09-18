@@ -6,7 +6,7 @@ FILES = build *.spec
 
 #COMPILER variable
 CC = pyinstaller
-CFLAGS = --clean --noconfirm --uac-admin --hidden-import=pyautogui --hidden-import=pynput --hidden-import=subprocess --name hyperdog -F
+CFLAGS = --clean --noconfirm --noconsole --hidden-import=pyautogui --hidden-import=pynput --hidden-import=subprocess --name hyperdog -F
 
 #rules and recipes
 all: clean build cleanspec
