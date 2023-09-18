@@ -2,6 +2,7 @@
 
 import subprocess
 import pyautogui
+import os
 from os import system as osys
 from pynput import keyboard
 
@@ -21,8 +22,13 @@ $$ |  $$ |\$$$$$$$ |$$$$$$$  |\$$$$$$$\ $$ |      \$$$$$$$ |\$$$$$$  |\$$$$$$$ |
 
 made by mrdog233o5 (William Chen)''')
 
-distant = 10
-gridSize = [2,2]
+try:
+    confFile = eval(open(os.path.expanduser('~')+"/.config/hyperdog/config.json", 'r').read())
+    distant = confFile["distant"]
+    gridSize = confFile["grid size"]
+except:
+    print("ERROR >>> config file error, READ THE FRIENDLY MANUAL!!!!! DO NOT ASK ME HOW!!!!!")
+    exit(1)
 keyPressed = {}
 gridX = []
 gridY = []
