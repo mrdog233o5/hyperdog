@@ -22,9 +22,22 @@ $$ |  $$ |\$$$$$$$ |$$$$$$$  |\$$$$$$$\ $$ |      \$$$$$$$ |\$$$$$$  |\$$$$$$$ |
 made by mrdog233o5 (William Chen)''')
 
 distant = 10
+gridSize = [2,2]
 keyPressed = {}
+gridX = []
+gridY = []
 width = pyautogui.size().width
 height = pyautogui.size().height
+gridWidth = width // gridSize[0]
+gridHeight = height // gridSize[1]
+for i in range(gridSize[0]):
+    gridX.append(gridWidth*i)
+for i in range(gridSize[1]):
+    gridY.append(gridHeight*i)
+
+def find_closest_value(number, number_list):
+    closest_value = min(number_list, key=lambda x: abs(x - number))
+    return closest_value
 
 def get_active_window_pos():
     script = 'tell application "System Events" to get position of window 1 of (process 1 where frontmost is true)'
@@ -94,29 +107,36 @@ def resizeWindow(x,y):
 
 def on_activate_up():
     moveWindow("",distant)
-    resizeWindow("",height/2 - 1.5*distant)
+    resizeWindow("",gridY[(len(gridY)+1)//2] - 2*distant)
 
 def on_activate_down():
-    moveWindow("", distant/2 + height/2)
-    resizeWindow("",height/2 - 1.5*distant)
+    moveWindow("", distant + gridY[(len(gridY)+1)//2])
+    resizeWindow("",height - gridY[(len(gridY)+1)//2] - 2*distant)
 
 def on_activate_left():
     moveWindow(distant,"")
-    resizeWindow(width/2-1.5*distant,"")
+    resizeWindow(gridX[(len(gridX)+1)//2]-2*distant,"")
 
 def on_activate_right():
-    moveWindow(distant/2 + width/2, "")
-    resizeWindow(width/2-1.5*distant,"")
+    moveWindow(distant + gridX[(len(gridX)+1)//2], "")
+    resizeWindow(width - gridX[(len(gridX)+1)//2]-2*distant,"")
 
 def on_activate_full():
     moveWindow(distant, distant)
     resizeWindow(width-2*distant,height-2*distant)
 
+def on_activate_init():
+    x,y = get_active_window_pos()
+    width,height = get_active_window_size()
+    moveWindow(find_closest_value(x,gridX)+distant,find_closest_value(y,gridY)+distant)
+    resizeWindow(find_closest_value(width,gridX)-2*distant,find_closest_value(height,gridY)-2*distant)
+
 with keyboard.GlobalHotKeys({
-    '<cmd>+<shift_l>+w': on_activate_up,
-    '<cmd>+<shift_l>+s': on_activate_down,
-    '<cmd>+<shift_l>+a': on_activate_left,
-    '<cmd>+<shift_l>+d': on_activate_right,
-    '<cmd>+<shift_l>+z': on_activate_full,
+    '<ctrl>+<alt>+i': on_activate_init,
+    '<ctrl>+<alt>+w': on_activate_up,
+    '<ctrl>+<alt>+s': on_activate_down,
+    '<ctrl>+<alt>+a': on_activate_left,
+    '<ctrl>+<alt>+d': on_activate_right,
+    '<ctrl>+<alt>+f': on_activate_full,
 }) as h:
     h.join()
