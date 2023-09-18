@@ -2,14 +2,29 @@
 
 import subprocess
 import pyautogui
+from os import system as osys
 from pynput import keyboard
+
+osys("clear")
+print('''
+$$\                                                     $$\                     
+$$ |                                                    $$ |                    
+$$$$$$$\  $$\   $$\  $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$$ | $$$$$$\   $$$$$$\  
+$$  __$$\ $$ |  $$ |$$  __$$\ $$  __$$\ $$  __$$\ $$  __$$ |$$  __$$\ $$  __$$\ 
+$$ |  $$ |$$ |  $$ |$$ /  $$ |$$$$$$$$ |$$ |  \__|$$ /  $$ |$$ /  $$ |$$ /  $$ |
+$$ |  $$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |      $$ |  $$ |$$ |  $$ |$$ |  $$ |
+$$ |  $$ |\$$$$$$$ |$$$$$$$  |\$$$$$$$\ $$ |      \$$$$$$$ |\$$$$$$  |\$$$$$$$ |
+\__|  \__| \____$$ |$$  ____/  \_______|\__|       \_______| \______/  \____$$ |
+          $$\   $$ |$$ |                                              $$\   $$ |
+          \$$$$$$  |$$ |                                              \$$$$$$  |
+           \______/ \__|                                               \______/ 
+
+made by mrdog233o5 (William Chen)''')
 
 distant = 10
 keyPressed = {}
 width = pyautogui.size().width
 height = pyautogui.size().height
-
-import subprocess
 
 def get_active_window_pos():
     script = 'tell application "System Events" to get position of window 1 of (process 1 where frontmost is true)'
