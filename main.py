@@ -1,8 +1,10 @@
 #!/opt/homebrew/bin/python3
+
 import subprocess
 import pyautogui
 from pynput import keyboard
 
+distant = 10
 keyPressed = {}
 width = pyautogui.size().width
 height = pyautogui.size().height
@@ -27,15 +29,31 @@ def resizeWindow(x,y):
         end tell
     end tell'''])
 
-moveWindow(0,0)
+def on_activate_up():
+    moveWindow(distant,distant)
+    resizeWindow(width - 2*distant,height/2 - 2*distant)
+
+def on_activate_down():
+    moveWindow(distant, distant + height/2)
+    resizeWindow(width - 2*distant,height/2 - 2*distant)
 
 def on_activate_left():
-    moveWindow(0,0)
+    moveWindow(distant,distant)
+    resizeWindow(width/2-2*distant,height-2*distant)
 
 def on_activate_right():
-    moveWindow(width/2, 0)
+    moveWindow(distant + width/2, distant)
+    resizeWindow(width/2-2*distant,height-2*distant)
+
+def on_activate_full():
+    moveWindow(distant, distant)
+    resizeWindow(width-2*distant,height-2*distant)
 
 with keyboard.GlobalHotKeys({
-        '<cmd>+<shift_l>+a': on_activate_left,
-        '<cmd>+<shift_l>+d': on_activate_right}) as h:
+    '<cmd>+<shift_l>+w': on_activate_up,
+    '<cmd>+<shift_l>+s': on_activate_down,
+    '<cmd>+<shift_l>+a': on_activate_left,
+    '<cmd>+<shift_l>+d': on_activate_right,
+    '<cmd>+<shift_l>+z': on_activate_full
+}) as h:
     h.join()
