@@ -117,7 +117,7 @@ def resizeWindow(x,y):
 
 def on_activate_up():
     moveWindow("",distant)
-    resizeWindow("",gridY[(len(gridY)+1)//2] - 2*distant)
+    resizeWindow("",gridY[len(gridY)//2] - 2*distant)
 
 def on_activate_down():
     moveWindow("", distant + gridY[len(gridY)//2])    
@@ -125,7 +125,7 @@ def on_activate_down():
 
 def on_activate_left():
     moveWindow(distant,"")
-    resizeWindow(gridX[(len(gridX)+1)//2]-2*distant,"")
+    resizeWindow(gridX[len(gridX)//2]-2*distant,"")
 
 def on_activate_right():
     moveWindow(distant + gridX[len(gridX)//2], "")
