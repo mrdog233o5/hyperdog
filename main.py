@@ -36,13 +36,15 @@ width = pyautogui.size().width
 height = pyautogui.size().height
 gridWidth = width // gridSize[0]
 gridHeight = height // gridSize[1]
-for i in range(gridSize[0]):
+for i in range(gridSize[0]+1):
     gridX.append(gridWidth*i)
-for i in range(gridSize[1]):
+for i in range(gridSize[1]+1):
     gridY.append(gridHeight*i)
 
 def find_closest_value(number, number_list):
     closest_value = min(number_list, key=lambda x: abs(x - number))
+    if number >= number_list[len(number_list)-1]:
+        closest_value = number_list[len(number_list)-1]
     return closest_value
 
 def get_active_window_pos():
@@ -69,6 +71,10 @@ def get_active_window_size():
         window_size = output.split(", ")
         window_width = int(window_size[0])
         window_height = int(window_size[1])
+        if window_width == 0:
+            window_width = width
+        if window_height == 0:
+            window_height == height
         return window_width, window_height
     else:
         return None
@@ -103,9 +109,7 @@ def resizeWindow(x,y):
             tell process frontApp
                 set frontWindow to first window
                 set currentBounds to size of frontWindow
-                set currentOrigin to position of frontWindow
                 set size of frontWindow to {{{x}, {y}}}
-                set position of frontWindow to currentOrigin
             end tell
         end tell'''])
     except:
@@ -134,8 +138,10 @@ def on_activate_full():
 def on_activate_init():
     x,y = get_active_window_pos()
     widthWin,heightWin = get_active_window_size()
-    moveWindow(find_closest_value(x,gridX)+distant,find_closest_value(y,gridY)+distant)
-    resizeWindow(find_closest_value(widthWin,gridX)-2*distant,find_closest_value(heightWin,gridY)-2*distant)
+    closestPos = [find_closest_value(x,gridX), find_closest_value(y,gridY)]
+    closestSize = [find_closest_value(widthWin+x,gridX)-x, find_closest_value(heightWin+y,gridY)-y]
+    moveWindow(closestPos[0]+distant,closestPos[1]+distant)
+    resizeWindow(closestSize[0]-1*distant,closestSize[1]-1*distant)
 
 with keyboard.GlobalHotKeys({
     '<ctrl>+<alt>+i': on_activate_init,
