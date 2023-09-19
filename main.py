@@ -133,9 +133,9 @@ def on_activate_full():
 
 def on_activate_init():
     x,y = get_active_window_pos()
-    width,height = get_active_window_size()
+    widthWin,heightWin = get_active_window_size()
     moveWindow(find_closest_value(x,gridX)+distant,find_closest_value(y,gridY)+distant)
-    resizeWindow(find_closest_value(width,gridX)-2*distant,find_closest_value(height,gridY)-2*distant)
+    resizeWindow(find_closest_value(widthWin,gridX)-2*distant,find_closest_value(heightWin,gridY)-2*distant)
 
 with keyboard.GlobalHotKeys({
     '<ctrl>+<alt>+i': on_activate_init,
