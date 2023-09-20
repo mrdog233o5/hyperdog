@@ -26,9 +26,11 @@ try:
     confFile = eval(open(os.path.expanduser('~')+"/.config/hyperdog/config.json", 'r').read())
     distant = confFile["distant"]
     gridSize = confFile["grid size"]
+    termDir = confFile["terminal directory"]
 except:
     print("ERROR >>> config file error, READ THE FRIENDLY MANUAL!!!!! DO NOT ASK ME HOW!!!!!")
     exit(1)
+
 keyPressed = {}
 gridX = []
 gridY = []
@@ -36,6 +38,7 @@ width = pyautogui.size().width
 height = pyautogui.size().height
 gridWidth = width // gridSize[0]
 gridHeight = height // gridSize[1]
+
 for i in range(gridSize[0]+1):
     gridX.append(gridWidth*i)
 for i in range(gridSize[1]+1):
@@ -144,11 +147,11 @@ def on_activate_init():
     resizeWindow(closestSize[0]-1*distant,closestSize[1]-1*distant)
 
 with keyboard.GlobalHotKeys({
-    '<ctrl>+<alt>+i': on_activate_init,
     '<ctrl>+<alt>+w': on_activate_up,
     '<ctrl>+<alt>+s': on_activate_down,
     '<ctrl>+<alt>+a': on_activate_left,
     '<ctrl>+<alt>+d': on_activate_right,
     '<ctrl>+<alt>+f': on_activate_full,
+    '<ctrl>+<alt>+i': on_activate_init,
 }) as h:
     h.join()
