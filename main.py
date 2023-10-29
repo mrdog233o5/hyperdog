@@ -26,7 +26,7 @@ try:
     confFile = eval(open(os.path.expanduser('~')+"/.config/hyperdog/config.json", 'r').read())
     distant = confFile["distant"]
     gridSize = confFile["grid size"]
-    termDir = confFile["terminal directory"]
+
 except:
     print("ERROR >>> config file error, READ THE FRIENDLY MANUAL!!!!! DO NOT ASK ME HOW!!!!!")
     exit(1)
